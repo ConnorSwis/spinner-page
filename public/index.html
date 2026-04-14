@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spin the Wheel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Spin & Win" />
+    <meta
+      property="og:description"
+      content="Add your choices and let the wheel decide. A free, no-fuss spin-the-wheel tool."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/og-image.png" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>SPIN <span>&</span> WIN</h1>
+      <p class="tagline">Add your choices, let the wheel decide</p>
+    </header>
+
+    <div class="layout">
+      <!-- Wheel -->
+      <div class="wheel-col">
+        <div class="wheel-outer">
+          <canvas id="wheelCanvas" width="370" height="370"></canvas>
+        </div>
+        <button id="spinBtn" disabled>SPIN IT</button>
+      </div>
+
+      <!-- Options -->
+      <div class="options-col">
+        <div class="card">
+          <div class="card-title">Settings</div>
+          <div class="toggle-row">
+            <label class="toggle-label" for="autoDisableToggle">
+              Disable chosen options
+              <small>Winners are removed from the wheel</small>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoDisableToggle" />
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Add a Choice</div>
+          <div class="add-row">
+            <input
+              id="choiceInput"
+              type="text"
+              placeholder="e.g. Pizza night…"
+              maxlength="40"
+              autocomplete="off"
+            />
+            <button id="addBtn">+</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            Choices <span class="count-pill" id="countPill">0</span>
+          </div>
+          <div id="itemList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winner modal -->
+    <div id="overlay">
+      <div class="modal">
+        <span class="modal-emoji">&#127881;</span>
+        <p class="modal-sub">The wheel has spoken</p>
+        <div id="modalWinner"></div>
+        <button id="modalClose">Woohoo!</button>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

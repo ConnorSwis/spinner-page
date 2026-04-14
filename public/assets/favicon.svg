@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Wheel segments -->
+  <circle cx="32" cy="32" r="30" fill="#ede9f8"/>
+  <path d="M32 32 L32 2 A30 30 0 0 1 58 47 Z" fill="#f03e3e"/>
+  <path d="M32 32 L58 47 A30 30 0 0 1 6 47 Z" fill="#f59f00"/>
+  <path d="M32 32 L6 47 A30 30 0 0 1 32 2 Z" fill="#1971c2"/>
+  <!-- Dividers -->
+  <line x1="32" y1="32" x2="32" y2="2"  stroke="white" stroke-width="2"/>
+  <line x1="32" y1="32" x2="58" y2="47" stroke="white" stroke-width="2"/>
+  <line x1="32" y1="32" x2="6"  y2="47" stroke="white" stroke-width="2"/>
+  <!-- Center cap -->
+  <circle cx="32" cy="32" r="5" fill="white" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Pointer -->
+  <polygon points="32,0 28,10 36,10" fill="#1c1b22"/>
+</svg>
