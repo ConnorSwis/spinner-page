@@ -326,6 +326,13 @@
             <h3>Items</h3>
             <button
               class="mini-btn"
+              style="background: #3b82f6"
+              onclick="shuffleItems()"
+            >
+              Shuffle Wheel
+            </button>
+            <button
+              class="mini-btn"
               style="background: #ef4444"
               onclick="resetAll()"
             >
@@ -392,6 +399,7 @@
               name,
               initialWeight: weight,
               currentWeight: weight,
+              isVisible: true,
               color: `hsl(${(i * 137.5) % 360}, 60%, 50%)`,
             };
           })
@@ -413,19 +421,31 @@
         list.innerHTML = items
           .map(
             (item, i) => `
-                <div class="inventory-item" style="opacity: ${item.currentWeight ? 1 : 0.3}">
-                    <div class="item-dot" style="background:${item.color}"></div>
-                    <div class="item-info">${item.name}</div>
-                    <div class="item-count">${item.currentWeight}/${item.initialWeight}</div>
-                    <button class="mini-btn" onclick="resetOne(${i})">Reset</button>
-                </div>
-            `,
+    <div class="inventory-item" style="opacity: ${item.isVisible && item.currentWeight > 0 ? 1 : 0.4}">
+      <div onclick="toggleVisibility(${i})" style="display:flex; align-items:center; flex:1; cursor:pointer;" title="Click to enable/disable">
+          <div class="item-dot" style="background:${item.color}"></div>
+          <div class="item-info">${item.name}</div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:2.5px;"> 
+          <button class="mini-btn" onclick="adjustWeight(${i}, -1)">−</button>
+          <div class="item-count" style="margin: 0 5px; min-width: 40px; text-align: center;">
+            ${item.currentWeight}/${item.initialWeight}
+          </div>
+          <button class="mini-btn" onclick="adjustWeight(${i}, 1)">＋</button>
+      </div>
+
+      <button class="mini-btn" style="margin-left: 15px;" onclick="resetOne(${i})">Reset</button>
+    </div>
+  `,
           )
           .join("");
+
         draw();
-        document.getElementById("spin-btn").disabled = items.every(
-          (i) => i.currentWeight <= 0,
-        );
+
+        // Disable spin button if no visible items with weight exist
+        const canSpin = items.some((i) => i.isVisible && i.currentWeight > 0);
+        document.getElementById("spin-btn").disabled = !canSpin;
       }
 
       function resetOne(i) {
@@ -442,7 +462,7 @@
       }
 
       function draw(rot = currentRotation) {
-        const active = items.filter((i) => i.currentWeight > 0);
+        const active = items.filter((i) => i.isVisible && i.currentWeight > 0);
         const total = active.reduce((s, i) => s + i.currentWeight, 0);
         ctx.clearRect(0, 0, 1200, 1200);
         if (!total) {
@@ -535,7 +555,8 @@
       }
 
       function showWinner() {
-        const active = items.filter((i) => i.currentWeight > 0);
+        // Added item.isVisible check here
+        const active = items.filter((i) => i.isVisible && i.currentWeight > 0);
         const total = active.reduce((s, i) => s + i.currentWeight, 0);
 
         let stopAngle =
@@ -564,6 +585,28 @@
           save();
         }
         document.getElementById("winner-overlay").style.display = "none";
+        updateUI();
+      }
+
+      function toggleVisibility(i) {
+        items[i].isVisible = !items[i].isVisible;
+        save();
+        updateUI();
+      }
+
+      function adjustWeight(i, delta) {
+        items[i].currentWeight = Math.max(0, items[i].currentWeight + delta);
+        save();
+        updateUI();
+      }
+
+      function shuffleItems() {
+        // Fisher-Yates Shuffle
+        for (let i = items.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [items[i], items[j]] = [items[j], items[i]];
+        }
+        save();
         updateUI();
       }
     </script>
