@@ -10,9 +10,7 @@
       sizes="180x180"
       href="assets/apple-touch-icon.png"
     />
-    <link rel="stylesheet" href="css/styles.css" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
     <!-- Open Graph -->
@@ -23,6 +21,281 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/og-image.png" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: #0f172a; /* Darker, more premium feel */
+        color: #f8fafc;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+      }
+
+      .main-container {
+        display: flex;
+        width: 100%;
+        max-width: 1600px;
+        height: 100%;
+        padding: 25px;
+        gap: 30px;
+      }
+
+      /* Left Panel */
+      .left-panel {
+        flex: 0 0 380px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 20px;
+      }
+
+      details {
+        background: #1e293b;
+        border-radius: 12px;
+        padding: 15px;
+        border: 1px solid #334155;
+      }
+      summary {
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        color: #94a3b8;
+      }
+      summary::after {
+        content: "＋";
+      }
+      details[open] summary::after {
+        content: "－";
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+        margin-top: 15px;
+        padding: 12px;
+        background: #0f172a;
+        color: #38bdf8;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.8rem;
+      }
+
+      button {
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .primary-btn {
+        background: #3b82f6;
+        color: white;
+        padding: 12px;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .primary-btn:hover {
+        background: #2563eb;
+      }
+
+      .inventory-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background: #1e293b;
+        border-radius: 12px;
+        border: 1px solid #334155;
+        overflow: hidden;
+      }
+      .inventory-header {
+        padding: 15px 20px;
+        background: #334155;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .inventory-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px 0;
+      }
+      .inventory-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid #334155;
+        transition: background 0.2s;
+      }
+      .inventory-item:hover {
+        background: #2d3748;
+      }
+      .item-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+      .item-info {
+        flex: 1;
+        font-size: 0.9rem;
+      }
+      .item-count {
+        font-family: monospace;
+        font-weight: bold;
+        color: #38bdf8;
+        margin: 0 15px;
+      }
+      .mini-btn {
+        background: #475569;
+        color: #f8fafc;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+      }
+
+      /* Right Panel */
+      .right-panel {
+        flex: 1;
+        background: #1e293b;
+        border-radius: 12px;
+        border: 1px solid #334155;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .wheel-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+      }
+      .pointer {
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 40px;
+        background: #ef4444;
+        clip-path: polygon(0 50%, 100% 0, 100% 100%);
+        z-index: 20;
+        border-left: 4px solid white;
+      }
+
+      #spin-btn {
+        margin-top: 40px;
+        padding: 20px 60px;
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-radius: 50px;
+        box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+      }
+      #spin-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.6);
+      }
+      #spin-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Winner Overlay */
+      #winner-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.9);
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        animation: fadeIn 0.3s ease-out;
+      }
+      .winner-card {
+        background: #334155;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        border: 2px solid #38bdf8;
+        box-shadow: 0 0 50px rgba(56, 189, 248, 0.2);
+        max-width: 80%;
+      }
+      .winner-card h3 {
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
+      .winner-card h2 {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 30px;
+        line-height: 1.2;
+      }
+      .confirm-btn {
+        background: #38bdf8;
+        color: #0f172a;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 1000px) {
+        body {
+          height: auto;
+          overflow: auto;
+        }
+        .main-container {
+          flex-direction: column;
+          height: auto;
+        }
+        .left-panel {
+          flex: none;
+          width: 100%;
+        }
+        .right-panel {
+          padding: 40px 0;
+        }
+        .wheel-container {
+          width: 90vw;
+          height: 90vw;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="main-container">
@@ -66,6 +339,223 @@
         <button id="spin-btn" onclick="spin()">SPIN THE WHEEL</button>
       </div>
     </div>
+
+    <script>
+      const STORAGE_KEY = "wardrobe_spinner_v3";
+      let items = [];
+      let currentRotation = 0;
+      let isSpinning = false;
+      let lastWinner = null;
+
+      const canvas = document.getElementById("wheel");
+      const ctx = canvas.getContext("2d");
+      const centerX = 600,
+        centerY = 600,
+        radius = 597;
+
+      window.onload = () => {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          items = JSON.parse(saved);
+          updateUI();
+        } else {
+          drawEmpty();
+        }
+      };
+
+      function loadCSV() {
+        const raw = document.getElementById("csv-input").value.trim();
+        if (!raw) return;
+        const newItems = raw
+          .split("\n")
+          .map((line, i) => {
+            const parts = line.split(",");
+            const weight = parseInt(parts.pop());
+            const name = parts.join(",").trim();
+            return {
+              id: Date.now() + i,
+              name,
+              initialWeight: weight,
+              currentWeight: weight,
+              color: `hsl(${(i * 137.5) % 360}, 60%, 50%)`,
+            };
+          })
+          .filter((item) => item.name && !isNaN(item.currentWeight));
+
+        items = newItems;
+        save();
+        updateUI();
+        document.getElementById("csv-input").value = "";
+        document.querySelector("details").open = false;
+      }
+
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      }
+
+      function updateUI() {
+        const list = document.getElementById("inventory-list");
+        list.innerHTML = items
+          .map(
+            (item, i) => `
+                <div class="inventory-item" style="opacity: ${item.currentWeight ? 1 : 0.3}">
+                    <div class="item-dot" style="background:${item.color}"></div>
+                    <div class="item-info">${item.name}</div>
+                    <div class="item-count">${item.currentWeight}/${item.initialWeight}</div>
+                    <button class="mini-btn" onclick="resetOne(${i})">Reset</button>
+                </div>
+            `,
+          )
+          .join("");
+        draw();
+        document.getElementById("spin-btn").disabled = items.every(
+          (i) => i.currentWeight <= 0,
+        );
+      }
+
+      function resetOne(i) {
+        items[i].currentWeight = items[i].initialWeight;
+        save();
+        updateUI();
+      }
+      function resetAll() {
+        if (confirm("Reset all?")) {
+          items.forEach((i) => (i.currentWeight = i.initialWeight));
+          save();
+          updateUI();
+        }
+      }
+
+      function draw(rot = currentRotation) {
+        const active = items.filter((i) => i.currentWeight > 0);
+        const total = active.reduce((s, i) => s + i.currentWeight, 0);
+        ctx.clearRect(0, 0, 1200, 1200);
+        if (!total) {
+          drawEmpty();
+          return;
+        }
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(rot);
+
+        // FIX: Draw a solid base circle first.
+        // This prevents "seams" or "yellow fringes" between slices.
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        ctx.fillStyle = active[0].color; // Use the first item's color as a base
+        ctx.fill();
+
+        let currentAngle = 0;
+        active.forEach((item) => {
+          const slice = (item.currentWeight / total) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, radius, currentAngle, currentAngle + slice);
+          ctx.fillStyle = item.color;
+          ctx.fill();
+
+          // Use a slightly more opaque white for the divider lines
+          ctx.strokeStyle = "rgba(255,255,255,0.3)";
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          ctx.save();
+          ctx.rotate(currentAngle + slice / 2);
+          ctx.fillStyle = "white";
+          ctx.font = "bold 26px sans-serif";
+          ctx.textAlign = "right";
+          if (!isSpinning) {
+            ctx.shadowColor = "rgba(0,0,0,0.8)";
+            ctx.shadowBlur = 10;
+          }
+          ctx.fillText(
+            item.name.length > 30 ? item.name.slice(0, 27) + "..." : item.name,
+            radius - 50,
+            10,
+          );
+          ctx.restore();
+
+          currentAngle += slice;
+        });
+        ctx.restore();
+      }
+
+      function drawEmpty() {
+        ctx.fillStyle = "#1e293b";
+        ctx.beginPath();
+        ctx.arc(600, 600, 600, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#475569";
+        ctx.font = "40px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Add items to start", 600, 600);
+      }
+
+      function spin() {
+        if (isSpinning) return;
+        isSpinning = true;
+        document.getElementById("spin-btn").disabled = true;
+
+        const duration = 8000; // 8 Seconds - much slower and more dramatic
+        const startRot = currentRotation;
+        const extraRots = Math.PI * 2 * (4 + Math.random() * 2);
+        const endRot = startRot + extraRots;
+        const startTime = performance.now();
+
+        function animate(now) {
+          const elapsed = now - startTime;
+          const t = Math.min(elapsed / duration, 1);
+
+          // quintic ease out for a VERY long crawl at the end
+          const ease = 1 - Math.pow(1 - t, 5);
+
+          currentRotation = startRot + (endRot - startRot) * ease;
+          draw();
+
+          if (t < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            isSpinning = false;
+            currentRotation %= Math.PI * 2;
+            showWinner();
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      function showWinner() {
+        const active = items.filter((i) => i.currentWeight > 0);
+        const total = active.reduce((s, i) => s + i.currentWeight, 0);
+
+        let stopAngle =
+          (Math.PI * 2 - (currentRotation % (Math.PI * 2))) % (Math.PI * 2);
+        let currentAngle = 0;
+
+        for (let item of active) {
+          const slice = (item.currentWeight / total) * Math.PI * 2;
+          if (stopAngle >= currentAngle && stopAngle <= currentAngle + slice) {
+            lastWinner = item;
+            break;
+          }
+          currentAngle += slice;
+        }
+
+        if (lastWinner) {
+          document.getElementById("winner-text").innerText = lastWinner.name;
+          document.getElementById("winner-overlay").style.display = "flex";
+        }
+      }
+
+      function confirmWin() {
+        const idx = items.findIndex((i) => i.id === lastWinner.id);
+        if (idx !== -1) {
+          items[idx].currentWeight = Math.max(0, items[idx].currentWeight - 1);
+          save();
+        }
+        document.getElementById("winner-overlay").style.display = "none";
+        updateUI();
+      }
+    </script>
   </body>
-  <script src="js/script.js"></script>
 </html>
