@@ -36,6 +36,14 @@
       <p class="tagline">Add your choices, let the wheel decide</p>
     </header>
 
+    <!-- Spinner selector -->
+    <div class="spinner-tabs-wrap">
+      <div class="spinner-tabs" id="spinnerTabs"></div>
+      <button id="addSpinnerBtn" class="add-spinner-btn" title="New spinner">
+        +
+      </button>
+    </div>
+
     <div class="layout">
       <!-- Wheel -->
       <div class="wheel-col">
@@ -80,6 +88,31 @@
             Choices <span class="count-pill" id="countPill">0</span>
           </div>
           <div id="itemList"></div>
+        </div>
+
+        <div class="card accordion">
+          <div class="accordion-header" id="csvToggle">
+            <div class="card-title" style="margin-bottom: 0">
+              Import Weighted CSV
+            </div>
+            <span class="accordion-arrow">▼</span>
+          </div>
+
+          <div class="accordion-content collapsed" id="csvContent">
+            <p class="import-hint">
+              One entry per line: <code>name,weight</code>
+            </p>
+            <textarea
+              id="csvInput"
+              placeholder="Pizza,3&#10;Tacos,2&#10;Sushi,1"
+              rows="5"
+              spellcheck="false"
+            ></textarea>
+            <pre id="csvError" class="csv-error" hidden></pre>
+            <button id="importBtn" class="import-btn">
+              Import &amp; Replace
+            </button>
+          </div>
         </div>
       </div>
     </div>

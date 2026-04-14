@@ -1,18 +1,24 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --cream: #fdf6ec;
-  --ink:   #1c1b22;
-  --card:  #ffffff;
+  --ink: #1c1b22;
+  --card: #ffffff;
   --muted: #8b8799;
-  --border:#e2ddf5;
-  --red:   #f03e3e;
-  --spin-shadow: 0 8px 40px rgba(28,27,34,0.18);
+  --border: #e2ddf5;
+  --red: #f03e3e;
+  --spin-shadow: 0 8px 40px rgba(28, 27, 34, 0.18);
 }
 
 body {
   background: var(--cream);
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: var(--ink);
   min-height: 100vh;
   display: flex;
@@ -20,8 +26,16 @@ body {
   align-items: center;
   padding: 2.5rem 1rem 5rem;
   background-image:
-    radial-gradient(circle at 15% 15%, rgba(255,200,80,0.18) 0%, transparent 45%),
-    radial-gradient(circle at 85% 80%, rgba(100,180,255,0.15) 0%, transparent 45%);
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(255, 200, 80, 0.18) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(100, 180, 255, 0.15) 0%,
+      transparent 45%
+    );
 }
 
 header {
@@ -30,14 +44,16 @@ header {
 }
 
 h1 {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: clamp(2.2rem, 6vw, 3.6rem);
   letter-spacing: 1px;
   color: var(--ink);
   line-height: 1;
 }
 
-h1 span { color: var(--red); }
+h1 span {
+  color: var(--red);
+}
 
 .tagline {
   color: var(--muted);
@@ -75,16 +91,16 @@ h1 span { color: var(--red); }
 
 /* Triangle pointer */
 .wheel-outer::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  border-left:  16px solid transparent;
+  border-left: 16px solid transparent;
   border-right: 16px solid transparent;
-  border-top:   32px solid var(--ink);
+  border-top: 32px solid var(--ink);
   z-index: 5;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
 }
 
 #wheelCanvas {
@@ -95,7 +111,7 @@ h1 span { color: var(--red); }
 
 /* Spin button */
 #spinBtn {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: 1.4rem;
   letter-spacing: 2px;
   background: var(--ink);
@@ -104,17 +120,24 @@ h1 span { color: var(--red); }
   padding: 0.85rem 3.2rem;
   border-radius: 60px;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.25), 0 6px 20px rgba(28,27,34,0.2);
+  transition:
+    background 0.15s,
+    transform 0.1s,
+    box-shadow 0.15s;
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.25),
+    0 6px 20px rgba(28, 27, 34, 0.2);
 }
 #spinBtn:hover:not(:disabled) {
   background: #111;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 rgba(0,0,0,0.25), 0 10px 28px rgba(28,27,34,0.25);
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.25),
+    0 10px 28px rgba(28, 27, 34, 0.25);
 }
 #spinBtn:active:not(:disabled) {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 rgba(0,0,0,0.25);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
 }
 #spinBtn:disabled {
   background: #ccc;
@@ -136,7 +159,7 @@ h1 span { color: var(--red); }
   border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 1.3rem;
-  box-shadow: 0 2px 12px rgba(28,27,34,0.06);
+  box-shadow: 0 2px 12px rgba(28, 27, 34, 0.06);
 }
 
 .card-title {
@@ -155,7 +178,7 @@ h1 span { color: var(--red); }
 
 #choiceInput {
   flex: 1;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   padding: 0.6rem 0.9rem;
@@ -166,11 +189,16 @@ h1 span { color: var(--red); }
   outline: none;
   transition: border-color 0.15s;
 }
-#choiceInput:focus { border-color: var(--ink); }
-#choiceInput::placeholder { color: #bbb; font-weight: 400; }
+#choiceInput:focus {
+  border-color: var(--ink);
+}
+#choiceInput::placeholder {
+  color: #bbb;
+  font-weight: 400;
+}
 
 #addBtn {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: 1.3rem;
   line-height: 1;
   background: var(--ink);
@@ -181,12 +209,17 @@ h1 span { color: var(--red); }
   border-radius: 10px;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.12s, transform 0.1s;
+  transition:
+    background 0.12s,
+    transform 0.1s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#addBtn:hover { background: var(--red); transform: scale(1.08); }
+#addBtn:hover {
+  background: var(--red);
+  transform: scale(1.08);
+}
 
 /* List */
 #itemList {
@@ -197,8 +230,13 @@ h1 span { color: var(--red); }
   overflow-y: auto;
   padding-right: 2px;
 }
-#itemList::-webkit-scrollbar { width: 3px; }
-#itemList::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+#itemList::-webkit-scrollbar {
+  width: 3px;
+}
+#itemList::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
 
 .empty-msg {
   text-align: center;
@@ -220,13 +258,27 @@ h1 span { color: var(--red); }
   animation: pop-in 0.18s ease;
   cursor: pointer;
   user-select: none;
-  transition: background 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
 }
-.item-row:hover { background: #f0ebff; border-color: #c9bff0; }
-.item-row--disabled:hover { background: #f5f5f5; border-color: #ddd; }
+.item-row:hover {
+  background: #f0ebff;
+  border-color: #c9bff0;
+}
+.item-row--disabled:hover {
+  background: #f5f5f5;
+  border-color: #ddd;
+}
 @keyframes pop-in {
-  from { opacity: 0; transform: scale(0.93); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .item-dot {
@@ -253,16 +305,27 @@ h1 span { color: var(--red); }
   cursor: pointer;
   padding: 3px 5px;
   border-radius: 6px;
-  transition: color 0.12s, background 0.12s;
+  transition:
+    color 0.12s,
+    background 0.12s;
   flex-shrink: 0;
   line-height: 1;
 }
-.del-btn:hover { color: var(--red); background: #fff0f0; }
+.del-btn:hover {
+  color: var(--red);
+  background: #fff0f0;
+}
 
 /* Disabled item rows */
-.item-row--disabled { opacity: 0.5; }
-.item-row--disabled .item-name { text-decoration: line-through; }
-.item-row--disabled .item-dot  { filter: grayscale(1); }
+.item-row--disabled {
+  opacity: 0.5;
+}
+.item-row--disabled .item-name {
+  text-decoration: line-through;
+}
+.item-row--disabled .item-dot {
+  filter: grayscale(1);
+}
 
 /* Toggle */
 .toggle-row {
@@ -306,17 +369,23 @@ h1 span { color: var(--red); }
   transition: background 0.2s;
 }
 .toggle-track::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 3px; left: 3px;
-  width: 18px; height: 18px;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
   background: white;
   border-radius: 50%;
   transition: transform 0.2s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
-.toggle-switch input:checked + .toggle-track { background: var(--ink); }
-.toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+.toggle-switch input:checked + .toggle-track {
+  background: var(--ink);
+}
+.toggle-switch input:checked + .toggle-track::after {
+  transform: translateX(18px);
+}
 
 .count-pill {
   display: inline-block;
@@ -334,7 +403,7 @@ h1 span { color: var(--red); }
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(28,27,34,0.7);
+  background: rgba(28, 27, 34, 0.7);
   backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
@@ -357,14 +426,18 @@ h1 span { color: var(--red); }
   max-width: 360px;
   width: 90%;
   transform: scale(0.85);
-  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
 }
 #overlay.show .modal {
   transform: scale(1);
 }
 
-.modal-emoji { font-size: 3.5rem; display: block; margin-bottom: 0.6rem; }
+.modal-emoji {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 0.6rem;
+}
 .modal-sub {
   font-size: 0.7rem;
   font-weight: 800;
@@ -374,14 +447,14 @@ h1 span { color: var(--red); }
   margin-bottom: 0.5rem;
 }
 #modalWinner {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: 2.2rem;
   color: var(--ink);
   word-break: break-word;
   margin-bottom: 1.6rem;
 }
 #modalClose {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: 1.05rem;
   background: var(--ink);
   color: white;
@@ -389,7 +462,250 @@ h1 span { color: var(--red); }
   padding: 0.75rem 2.5rem;
   border-radius: 50px;
   cursor: pointer;
-  transition: background 0.12s, transform 0.1s;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+  transition:
+    background 0.12s,
+    transform 0.1s;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
 }
-#modalClose:hover { background: var(--red); transform: translateY(-1px); }
+#modalClose:hover {
+  background: var(--red);
+  transform: translateY(-1px);
+}
+
+/* ── Weight badge ─────────────────────────────── */
+.weight-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--muted);
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ── CSV import card ──────────────────────────── */
+.import-hint {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+}
+.import-hint code {
+  font-family: monospace;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-size: 0.76rem;
+  color: var(--ink);
+}
+
+#csvInput {
+  width: 100%;
+  font-family: monospace;
+  font-size: 0.82rem;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--ink);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 0.6rem;
+}
+#csvInput:focus {
+  border-color: var(--ink);
+}
+
+.csv-error {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--red);
+  background: #fff5f5;
+  border: 1.5px solid #ffc9c9;
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.6rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.import-btn {
+  width: 100%;
+  font-family: "Righteous", cursive;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  background: var(--ink);
+  color: white;
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    transform 0.1s;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+.import-btn:hover {
+  background: #111;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+.import-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+/* ── Spinner Tabs ─────────────────────────────── */
+.spinner-tabs-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 980px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.spinner-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  color: var(--ink);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(28, 27, 34, 0.03);
+}
+
+.spinner-tab:hover {
+  border-color: #c9bff0;
+  background: #f0ebff;
+}
+
+.spinner-tab.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+  box-shadow: 0 4px 12px rgba(28, 27, 34, 0.15);
+}
+
+.tab-name {
+  white-space: nowrap;
+}
+
+/* Inline edit mode */
+.tab-name-input {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed currentColor;
+  outline: none;
+  width: 80px;
+  text-align: center;
+}
+
+.tab-del {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 0.5;
+  cursor: pointer;
+  padding: 0 2px;
+  opacity: 0.7;
+  transition:
+    opacity 0.15s,
+    color 0.15s;
+}
+
+.tab-del:hover {
+  opacity: 1;
+  color: var(--red);
+}
+
+.spinner-tab.active .tab-del {
+  color: var(--cream);
+}
+
+.spinner-tab.active .tab-del:hover {
+  color: var(--red);
+}
+
+.add-spinner-btn {
+  font-family: "Righteous", cursive;
+  font-size: 1.2rem;
+  line-height: 1;
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px dashed var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.add-spinner-btn:hover {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+  border-style: solid;
+  transform: scale(1.08);
+}
+/* ── Accordion Styles ── */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.accordion-arrow {
+  font-size: 0.6rem;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+
+.accordion-content {
+  margin-top: 1rem;
+  display: block; /* Visible by default if 'collapsed' class is missing */
+}
+
+/* Collapsed State */
+.accordion-content.collapsed {
+  display: none;
+}
+
+.accordion.open .accordion-arrow {
+  transform: rotate(180deg);
+}
+
+/* Optional: Slight hover effect for the header */
+.accordion-header:hover .card-title {
+  color: var(--ink);
+}
