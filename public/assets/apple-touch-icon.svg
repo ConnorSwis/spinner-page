@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Background -->
+  <rect width="180" height="180" fill="#fdf6ec"/>
+
+  <!-- Wheel shadow -->
+  <circle cx="90" cy="93" r="68" fill="rgba(28,27,34,0.12)"/>
+
+  <!-- Wheel segments (6 slices) -->
+  <!-- Slice 1: top-right red -->
+  <path d="M90 90 L90 22 A68 68 0 0 1 148.87 124 Z" fill="#f03e3e"/>
+  <!-- Slice 2: right yellow -->
+  <path d="M90 90 L148.87 124 A68 68 0 0 1 31.13 124 Z" fill="#f59f00"/>
+  <!-- Slice 3: bottom-left blue -->
+  <path d="M90 90 L31.13 124 A68 68 0 0 1 90 22 Z" fill="#1971c2"/>
+
+  <!-- Inner segment highlights (lighter 6-slice version) -->
+  <!-- Slice 1 inner: top-right -->
+  <path d="M90 90 L90 22 A68 68 0 0 1 148.87 124 Z" fill="#f03e3e" opacity="0.85"/>
+  <path d="M90 90 L90 38 A52 52 0 0 1 135.02 116 Z" fill="#e64980" opacity="0.7"/>
+
+  <!-- Slice 2 inner -->
+  <path d="M90 90 L148.87 124 A68 68 0 0 1 31.13 124 Z" fill="#f59f00" opacity="0.85"/>
+  <path d="M90 90 L135.02 116 A52 52 0 0 1 44.98 116 Z" fill="#f76707" opacity="0.7"/>
+
+  <!-- Slice 3 inner -->
+  <path d="M90 90 L31.13 124 A68 68 0 0 1 90 22 Z" fill="#1971c2" opacity="0.85"/>
+  <path d="M90 90 L44.98 116 A52 52 0 0 1 90 38 Z" fill="#7048e8" opacity="0.7"/>
+
+  <!-- White divider lines -->
+  <line x1="90" y1="90" x2="90" y2="22"       stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <line x1="90" y1="90" x2="148.87" y2="124"  stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <line x1="90" y1="90" x2="31.13" y2="124"   stroke="white" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Outer ring -->
+  <circle cx="90" cy="90" r="68" fill="none" stroke="white" stroke-width="4"/>
+
+  <!-- Center cap -->
+  <circle cx="90" cy="90" r="12" fill="white" stroke="#e2ddf5" stroke-width="2"/>
+  <circle cx="90" cy="90" r="5"  fill="#1c1b22"/>
+
+  <!-- Pointer at top -->
+  <polygon points="90,10 83,26 97,26" fill="#1c1b22"/>
+  <polygon points="90,10 83,26 97,26" fill="#1c1b22" opacity="0.15" transform="translate(0,3)"/>
+</svg>
