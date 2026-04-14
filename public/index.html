@@ -3,130 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spin the Wheel</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-
+    <title>Spinner</title>
     <!-- iOS home screen icon -->
     <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="assets/apple-touch-icon.png"
     />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Spin & Win" />
+    <meta property="og:title" content="Spinner" />
     <meta
       property="og:description"
-      content="Add your choices and let the wheel decide. A free, no-fuss spin-the-wheel tool."
+      content="A spinner to randomly select weighted items and deduct from inventory."
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/og-image.png" />
   </head>
   <body>
-    <!-- Header -->
-    <header>
-      <h1>SPIN <span>&</span> WIN</h1>
-      <p class="tagline">Add your choices, let the wheel decide</p>
-    </header>
+    <div class="main-container">
+      <div class="left-panel">
+        <details>
+          <summary>Import Data</summary>
+          <textarea id="csv-input" placeholder="Name,Weight"></textarea>
+          <button class="primary-btn" onclick="loadCSV()">Replace All</button>
+        </details>
 
-    <!-- Spinner selector -->
-    <div class="spinner-tabs-wrap">
-      <div class="spinner-tabs" id="spinnerTabs"></div>
-      <button id="addSpinnerBtn" class="add-spinner-btn" title="New spinner">
-        +
-      </button>
-    </div>
-
-    <div class="layout">
-      <!-- Wheel -->
-      <div class="wheel-col">
-        <div class="wheel-outer">
-          <canvas id="wheelCanvas" width="370" height="370"></canvas>
+        <div class="inventory-container">
+          <div class="inventory-header">
+            <h3>Inventory</h3>
+            <button
+              class="mini-btn"
+              style="background: #ef4444"
+              onclick="resetAll()"
+            >
+              Reset All
+            </button>
+          </div>
+          <div class="inventory-list" id="inventory-list"></div>
         </div>
-        <button id="spinBtn" disabled>SPIN IT</button>
       </div>
 
-      <!-- Options -->
-      <div class="options-col">
-        <div class="card">
-          <div class="card-title">Settings</div>
-          <div class="toggle-row">
-            <label class="toggle-label" for="autoDisableToggle">
-              Disable chosen options
-              <small>Winners are removed from the wheel</small>
-            </label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="autoDisableToggle" />
-              <span class="toggle-track"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Add a Choice</div>
-          <div class="add-row">
-            <input
-              id="choiceInput"
-              type="text"
-              placeholder="e.g. Pizza night…"
-              maxlength="40"
-              autocomplete="off"
-            />
-            <button id="addBtn">+</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">
-            Choices <span class="count-pill" id="countPill">0</span>
-          </div>
-          <div id="itemList"></div>
-        </div>
-
-        <div class="card accordion">
-          <div class="accordion-header" id="csvToggle">
-            <div class="card-title" style="margin-bottom: 0">
-              Import Weighted CSV
-            </div>
-            <span class="accordion-arrow">▼</span>
-          </div>
-
-          <div class="accordion-content collapsed" id="csvContent">
-            <p class="import-hint">
-              One entry per line: <code>name,weight</code>
-            </p>
-            <textarea
-              id="csvInput"
-              placeholder="Pizza,3&#10;Tacos,2&#10;Sushi,1"
-              rows="5"
-              spellcheck="false"
-            ></textarea>
-            <pre id="csvError" class="csv-error" hidden></pre>
-            <button id="importBtn" class="import-btn">
-              Import &amp; Replace
+      <div class="right-panel">
+        <div id="winner-overlay">
+          <div class="winner-card">
+            <h3>Selected Item</h3>
+            <h2 id="winner-text">---</h2>
+            <button class="confirm-btn" onclick="confirmWin()">
+              Confirm & Deduct
             </button>
           </div>
         </div>
+
+        <div class="wheel-container">
+          <canvas id="wheel" width="1200" height="1200"></canvas>
+          <div class="pointer"></div>
+        </div>
+        <button id="spin-btn" onclick="spin()">SPIN THE WHEEL</button>
       </div>
     </div>
-
-    <!-- Winner modal -->
-    <div id="overlay">
-      <div class="modal">
-        <span class="modal-emoji">&#127881;</span>
-        <p class="modal-sub">The wheel has spoken</p>
-        <div id="modalWinner"></div>
-        <button id="modalClose">Woohoo!</button>
-      </div>
-    </div>
-
-    <script src="js/main.js"></script>
   </body>
+  <script src="js/script.js"></script>
 </html>
