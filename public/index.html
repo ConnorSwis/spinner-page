@@ -131,34 +131,257 @@
       .inventory-item {
         display: flex;
         align-items: center;
-        padding: 10px 20px;
+        padding: 10px 15px;
         border-bottom: 1px solid #334155;
         transition: background 0.2s;
+        gap: 6px;
       }
       .inventory-item:hover {
         background: #2d3748;
       }
       .item-dot {
-        width: 10px;
-        height: 10px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
-        margin-right: 12px;
+        cursor: pointer;
+        flex-shrink: 0;
+        border: 2px solid transparent;
       }
-      .item-info {
+      .item-dot:hover {
+        border-color: #f8fafc;
+      }
+      .item-name-input {
         flex: 1;
+        min-width: 0;
+        background: transparent;
+        border: 1px solid transparent;
+        color: #f8fafc;
         font-size: 0.9rem;
+        font-family: inherit;
+        padding: 4px 6px;
+        border-radius: 4px;
+      }
+      .item-name-input:hover {
+        border-color: #334155;
+      }
+      .item-name-input:focus {
+        border-color: #38bdf8;
+        background: #0f172a;
+        outline: none;
+      }
+      .item-weight-controls {
+        display: flex;
+        align-items: center;
+        gap: 2.5px;
+        flex-shrink: 0;
       }
       .item-count {
         font-family: monospace;
         font-weight: bold;
         color: #38bdf8;
-        margin: 0 15px;
+        min-width: 22px;
+        text-align: right;
+      }
+      .item-count-sep {
+        color: #64748b;
+        margin: 0 2px;
+      }
+      .item-initial-input {
+        width: 42px;
+        background: #0f172a;
+        border: 1px solid #334155;
+        color: #38bdf8;
+        font-family: monospace;
+        font-size: 0.85rem;
+        padding: 3px 4px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+      }
+      .item-initial-input:focus {
+        outline: none;
+        border-color: #38bdf8;
+      }
+      .item-initial-input::-webkit-outer-spin-button,
+      .item-initial-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
       .mini-btn {
         background: #475569;
         color: #f8fafc;
         padding: 4px 8px;
         font-size: 0.75rem;
+      }
+      .mini-btn.danger-mini {
+        background: #ef4444;
+      }
+
+      /* Tabs */
+      .tabs-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 8px;
+      }
+      .tabs-scroll {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        flex: 1;
+        scrollbar-width: thin;
+      }
+      .tab {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 6px 6px 12px;
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        font-size: 0.85rem;
+        color: #94a3b8;
+        user-select: none;
+        transition: all 0.15s;
+      }
+      .tab:hover {
+        border-color: #475569;
+        color: #f8fafc;
+      }
+      .tab.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+      }
+      .tab-close {
+        background: transparent;
+        border: none;
+        color: inherit;
+        opacity: 0.55;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0 4px;
+        line-height: 1;
+        border-radius: 4px;
+      }
+      .tab-close:hover {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.25);
+      }
+      .tab-add-btn {
+        background: #334155;
+        color: #f8fafc;
+        padding: 8px 14px;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .tab-add-btn:hover {
+        background: #475569;
+      }
+
+      /* Add Item form */
+      .add-item-row {
+        display: flex;
+        gap: 6px;
+        padding: 10px 15px;
+        border-bottom: 1px solid #334155;
+        background: #0f172a;
+      }
+      .add-item-row input {
+        background: #1e293b;
+        color: #f8fafc;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        font-family: inherit;
+      }
+      .add-item-row input:focus {
+        outline: none;
+        border-color: #38bdf8;
+      }
+      #add-item-name {
+        flex: 1;
+        min-width: 0;
+      }
+      #add-item-weight {
+        width: 60px;
+      }
+      .add-item-row button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+
+      /* History */
+      .history-list {
+        margin-top: 15px;
+        max-height: 220px;
+        overflow-y: auto;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        background: #0f172a;
+      }
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border-bottom: 1px solid #1e293b;
+        font-size: 0.85rem;
+      }
+      .history-item:last-child {
+        border-bottom: none;
+      }
+      .history-name {
+        color: #f8fafc;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 10px;
+      }
+      .history-time {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        font-family: monospace;
+        flex-shrink: 0;
+      }
+      .history-empty {
+        padding: 15px;
+        text-align: center;
+        color: #64748b;
+        font-size: 0.85rem;
+      }
+      .btn-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .btn-row .primary-btn {
+        margin-top: 0;
+      }
+      .secondary-btn {
+        background: #475569;
+        color: #f8fafc;
+        padding: 12px;
+        width: 100%;
+      }
+      .secondary-btn:hover {
+        background: #64748b;
+      }
+      .danger-btn {
+        background: #ef4444;
+        color: white;
+        padding: 12px;
+        width: 100%;
+      }
+      .danger-btn:hover {
+        background: #dc2626;
       }
 
       /* Right Panel */
@@ -315,10 +538,49 @@
   <body>
     <div class="main-container">
       <div class="left-panel">
+        <div class="tabs-bar">
+          <div class="tabs-scroll" id="tabs"></div>
+          <button class="tab-add-btn" onclick="addSpinner()" title="New spinner">
+            +
+          </button>
+        </div>
+
         <details>
           <summary>Import Data</summary>
           <textarea id="csv-input" placeholder="Name,Weight"></textarea>
-          <button class="primary-btn" onclick="loadCSV()">Replace All</button>
+          <button class="primary-btn" onclick="loadCSV()">
+            Replace Items (this tab)
+          </button>
+          <div class="btn-row">
+            <button class="secondary-btn" onclick="exportState()">
+              Export State
+            </button>
+            <button
+              class="secondary-btn"
+              onclick="document.getElementById('import-file').click()"
+            >
+              Import State
+            </button>
+            <input
+              type="file"
+              id="import-file"
+              accept="application/json"
+              style="display: none"
+              onchange="importState(event)"
+            />
+          </div>
+        </details>
+
+        <details>
+          <summary>Pick History</summary>
+          <div class="history-list" id="history-list"></div>
+          <button
+            class="danger-btn"
+            style="margin-top: 10px"
+            onclick="clearHistory()"
+          >
+            Clear History
+          </button>
         </details>
 
         <div class="inventory-container">
@@ -329,7 +591,7 @@
               style="background: #3b82f6"
               onclick="shuffleItems()"
             >
-              Shuffle Wheel
+              Shuffle
             </button>
             <button
               class="mini-btn"
@@ -337,6 +599,27 @@
               onclick="resetAll()"
             >
               Reset All
+            </button>
+          </div>
+          <div class="add-item-row">
+            <input
+              id="add-item-name"
+              placeholder="Item name"
+              onkeydown="if(event.key==='Enter') addItem()"
+            />
+            <input
+              id="add-item-weight"
+              type="number"
+              min="1"
+              value="1"
+              onkeydown="if(event.key==='Enter') addItem()"
+            />
+            <button
+              class="mini-btn"
+              style="background: #10b981"
+              onclick="addItem()"
+            >
+              + Add
             </button>
           </div>
           <div class="inventory-list" id="inventory-list"></div>
@@ -363,8 +646,11 @@
     </div>
 
     <script>
-      const STORAGE_KEY = "wardrobe_spinner_v3";
-      let items = [];
+      const STATE_KEY = "wardrobe_spinner_state_v2";
+      const LEGACY_ITEMS_KEY = "wardrobe_spinner_v3";
+      const LEGACY_HISTORY_KEY = "wardrobe_spinner_history_v1";
+
+      let state = null;
       let currentRotation = 0;
       let isSpinning = false;
       let lastWinner = null;
@@ -375,16 +661,207 @@
         centerY = 600,
         radius = 597;
 
-      window.onload = () => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          items = JSON.parse(saved);
-          updateUI();
-        } else {
-          drawEmpty();
+      function newId() {
+        if (typeof crypto !== "undefined" && crypto.randomUUID) {
+          return crypto.randomUUID();
         }
+        return `id-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      }
+
+      function defaultState() {
+        const id = newId();
+        return {
+          version: 2,
+          activeSpinnerId: id,
+          spinners: [{ id, name: "Spinner 1", items: [], history: [] }],
+        };
+      }
+
+      function normalizeSpinner(sp) {
+        return {
+          id: sp.id || newId(),
+          name: sp.name || "Untitled",
+          items: Array.isArray(sp.items) ? sp.items : [],
+          history: Array.isArray(sp.history) ? sp.history : [],
+        };
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(STATE_KEY);
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (
+              parsed &&
+              Array.isArray(parsed.spinners) &&
+              parsed.spinners.length
+            ) {
+              state = {
+                version: 2,
+                activeSpinnerId: parsed.activeSpinnerId,
+                spinners: parsed.spinners.map(normalizeSpinner),
+              };
+              if (
+                !state.spinners.find((sp) => sp.id === state.activeSpinnerId)
+              ) {
+                state.activeSpinnerId = state.spinners[0].id;
+              }
+              return;
+            }
+          } catch (e) {
+            console.warn("Failed to parse saved state; falling back.", e);
+          }
+        }
+        const legacyItems = localStorage.getItem(LEGACY_ITEMS_KEY);
+        const legacyHistory = localStorage.getItem(LEGACY_HISTORY_KEY);
+        if (legacyItems) {
+          try {
+            const id = newId();
+            state = {
+              version: 2,
+              activeSpinnerId: id,
+              spinners: [
+                {
+                  id,
+                  name: "Spinner 1",
+                  items: JSON.parse(legacyItems),
+                  history: legacyHistory ? JSON.parse(legacyHistory) : [],
+                },
+              ],
+            };
+            save();
+            return;
+          } catch (e) {
+            console.warn("Failed to migrate legacy state.", e);
+          }
+        }
+        state = defaultState();
+        save();
+      }
+
+      function activeSpinner() {
+        return (
+          state.spinners.find((sp) => sp.id === state.activeSpinnerId) ||
+          state.spinners[0]
+        );
+      }
+
+      function save() {
+        localStorage.setItem(STATE_KEY, JSON.stringify(state));
+      }
+
+      function escapeHTML(s) {
+        return String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+
+      window.onload = () => {
+        loadState();
+        renderTabs();
+        updateUI();
+        renderHistory();
       };
 
+      // --- Tabs ---
+      function renderTabs() {
+        const el = document.getElementById("tabs");
+        el.innerHTML = state.spinners
+          .map(
+            (sp) => `
+              <div class="tab ${sp.id === state.activeSpinnerId ? "active" : ""}"
+                   onclick="switchSpinner('${sp.id}')"
+                   ondblclick="renameSpinner('${sp.id}')"
+                   title="Click to switch — double-click to rename">
+                <span>${escapeHTML(sp.name)}</span>
+                <button class="tab-close"
+                        onclick="event.stopPropagation(); deleteSpinner('${sp.id}')"
+                        title="Delete spinner">×</button>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      function switchSpinner(id) {
+        if (isSpinning) return;
+        if (state.activeSpinnerId === id) return;
+        state.activeSpinnerId = id;
+        currentRotation = 0;
+        lastWinner = null;
+        document.getElementById("winner-overlay").style.display = "none";
+        save();
+        renderTabs();
+        updateUI();
+        renderHistory();
+      }
+
+      function addSpinner() {
+        const name = prompt(
+          "Spinner name:",
+          `Spinner ${state.spinners.length + 1}`,
+        );
+        if (!name || !name.trim()) return;
+        const id = newId();
+        state.spinners.push({
+          id,
+          name: name.trim(),
+          items: [],
+          history: [],
+        });
+        state.activeSpinnerId = id;
+        currentRotation = 0;
+        lastWinner = null;
+        save();
+        renderTabs();
+        updateUI();
+        renderHistory();
+      }
+
+      function renameSpinner(id) {
+        const sp = state.spinners.find((s) => s.id === id);
+        if (!sp) return;
+        const name = prompt("Rename spinner:", sp.name);
+        if (!name || !name.trim()) return;
+        sp.name = name.trim();
+        save();
+        renderTabs();
+      }
+
+      function deleteSpinner(id) {
+        if (state.spinners.length === 1) {
+          alert("Can't delete the last spinner.");
+          return;
+        }
+        const sp = state.spinners.find((s) => s.id === id);
+        if (!sp) return;
+        if (
+          !confirm(
+            `Delete spinner "${sp.name}"? This removes its items and history.`,
+          )
+        )
+          return;
+        state.spinners = state.spinners.filter((s) => s.id !== id);
+        if (state.activeSpinnerId === id) {
+          state.activeSpinnerId = state.spinners[0].id;
+          currentRotation = 0;
+          lastWinner = null;
+        }
+        save();
+        renderTabs();
+        updateUI();
+        renderHistory();
+      }
+
+      // --- Items ---
       function loadCSV() {
         const raw = document.getElementById("csv-input").value.trim();
         if (!raw) return;
@@ -405,63 +882,289 @@
           })
           .filter((item) => item.name && !isNaN(item.currentWeight));
 
-        items = newItems;
+        activeSpinner().items = newItems;
         save();
         updateUI();
         document.getElementById("csv-input").value = "";
         document.querySelector("details").open = false;
       }
 
-      function save() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      function addItem() {
+        const nameEl = document.getElementById("add-item-name");
+        const weightEl = document.getElementById("add-item-weight");
+        const name = nameEl.value.trim();
+        const weight = parseInt(weightEl.value);
+        if (!name) {
+          nameEl.focus();
+          return;
+        }
+        if (isNaN(weight) || weight < 1) {
+          alert("Weight must be a positive integer.");
+          weightEl.focus();
+          return;
+        }
+        const sp = activeSpinner();
+        const i = sp.items.length;
+        sp.items.push({
+          id: Date.now() + Math.random(),
+          name,
+          initialWeight: weight,
+          currentWeight: weight,
+          isVisible: true,
+          color: `hsl(${(i * 137.5) % 360}, 60%, 50%)`,
+        });
+        nameEl.value = "";
+        weightEl.value = "1";
+        save();
+        updateUI();
+        nameEl.focus();
+      }
+
+      function renameItem(i, value) {
+        const v = value.trim();
+        if (!v) {
+          updateUI();
+          return;
+        }
+        activeSpinner().items[i].name = v;
+        save();
+        updateUI();
+      }
+
+      function setInitialWeight(i, value) {
+        const w = parseInt(value);
+        if (isNaN(w) || w < 0) {
+          updateUI();
+          return;
+        }
+        activeSpinner().items[i].initialWeight = w;
+        save();
+        updateUI();
+      }
+
+      function deleteItem(i) {
+        const sp = activeSpinner();
+        if (!confirm(`Delete "${sp.items[i].name}"?`)) return;
+        sp.items.splice(i, 1);
+        save();
+        updateUI();
       }
 
       function updateUI() {
+        const sp = activeSpinner();
         const list = document.getElementById("inventory-list");
-        list.innerHTML = items
+        list.innerHTML = sp.items
           .map(
             (item, i) => `
-    <div class="inventory-item" style="opacity: ${item.isVisible && item.currentWeight > 0 ? 1 : 0.4}">
-      <div onclick="toggleVisibility(${i})" style="display:flex; align-items:center; flex:1; cursor:pointer;" title="Click to enable/disable">
-          <div class="item-dot" style="background:${item.color}"></div>
-          <div class="item-info">${item.name}</div>
-      </div>
-
-      <div style="display:flex; align-items:center; gap:2.5px;"> 
-          <button class="mini-btn" onclick="adjustWeight(${i}, -1)">−</button>
-          <div class="item-count" style="margin: 0 5px; min-width: 40px; text-align: center;">
-            ${item.currentWeight}/${item.initialWeight}
-          </div>
-          <button class="mini-btn" onclick="adjustWeight(${i}, 1)">＋</button>
-      </div>
-
-      <button class="mini-btn" style="margin-left: 15px;" onclick="resetOne(${i})">Reset</button>
-    </div>
-  `,
+              <div class="inventory-item" style="opacity: ${item.isVisible && item.currentWeight > 0 ? 1 : 0.4}">
+                <div class="item-dot" style="background:${item.color}"
+                     onclick="toggleVisibility(${i})"
+                     title="Click to enable/disable"></div>
+                <input class="item-name-input"
+                       value="${escapeHTML(item.name)}"
+                       onchange="renameItem(${i}, this.value)"
+                       title="Edit name" />
+                <div class="item-weight-controls">
+                  <button class="mini-btn" onclick="adjustWeight(${i}, -1)">−</button>
+                  <span class="item-count">${item.currentWeight}</span>
+                  <span class="item-count-sep">/</span>
+                  <input class="item-initial-input" type="number" min="0"
+                         value="${item.initialWeight}"
+                         onchange="setInitialWeight(${i}, this.value)"
+                         title="Initial weight" />
+                  <button class="mini-btn" onclick="adjustWeight(${i}, 1)">＋</button>
+                </div>
+                <button class="mini-btn" onclick="resetOne(${i})"
+                        title="Reset current to initial">Reset</button>
+                <button class="mini-btn danger-mini"
+                        onclick="deleteItem(${i})"
+                        title="Delete item">×</button>
+              </div>
+            `,
           )
           .join("");
 
         draw();
 
-        // Disable spin button if no visible items with weight exist
-        const canSpin = items.some((i) => i.isVisible && i.currentWeight > 0);
+        const canSpin = sp.items.some(
+          (i) => i.isVisible && i.currentWeight > 0,
+        );
         document.getElementById("spin-btn").disabled = !canSpin;
       }
 
       function resetOne(i) {
-        items[i].currentWeight = items[i].initialWeight;
+        const sp = activeSpinner();
+        sp.items[i].currentWeight = sp.items[i].initialWeight;
         save();
         updateUI();
       }
       function resetAll() {
         if (confirm("Reset all?")) {
-          items.forEach((i) => (i.currentWeight = i.initialWeight));
+          activeSpinner().items.forEach(
+            (i) => (i.currentWeight = i.initialWeight),
+          );
           save();
           updateUI();
         }
       }
 
+      function toggleVisibility(i) {
+        activeSpinner().items[i].isVisible =
+          !activeSpinner().items[i].isVisible;
+        save();
+        updateUI();
+      }
+
+      function adjustWeight(i, delta) {
+        const sp = activeSpinner();
+        sp.items[i].currentWeight = Math.max(
+          0,
+          sp.items[i].currentWeight + delta,
+        );
+        save();
+        updateUI();
+      }
+
+      function shuffleItems() {
+        const arr = activeSpinner().items;
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        save();
+        updateUI();
+      }
+
+      // --- History ---
+      function formatTimestamp(iso) {
+        const d = new Date(iso);
+        return d.toLocaleString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      function renderHistory() {
+        const list = document.getElementById("history-list");
+        const history = activeSpinner().history;
+        if (!history.length) {
+          list.innerHTML = `<div class="history-empty">No picks yet</div>`;
+          return;
+        }
+        list.innerHTML = history
+          .map(
+            (entry) => `
+              <div class="history-item">
+                <div class="history-name" title="${escapeHTML(entry.name)}">${escapeHTML(entry.name)}</div>
+                <div class="history-time">${formatTimestamp(entry.timestamp)}</div>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      function clearHistory() {
+        const sp = activeSpinner();
+        if (!sp.history.length) return;
+        if (confirm(`Clear pick history for "${sp.name}"?`)) {
+          sp.history = [];
+          save();
+          renderHistory();
+        }
+      }
+
+      // --- Import/Export ---
+      function exportState() {
+        const payload = {
+          version: 2,
+          exportedAt: new Date().toISOString(),
+          activeSpinnerId: state.activeSpinnerId,
+          spinners: state.spinners,
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+        a.href = url;
+        a.download = `spinner-state-${stamp}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function importState(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            let imported;
+            if (Array.isArray(parsed.spinners) && parsed.spinners.length) {
+              imported = {
+                version: 2,
+                activeSpinnerId: parsed.activeSpinnerId,
+                spinners: parsed.spinners.map(normalizeSpinner),
+              };
+              if (
+                !imported.spinners.find(
+                  (sp) => sp.id === imported.activeSpinnerId,
+                )
+              ) {
+                imported.activeSpinnerId = imported.spinners[0].id;
+              }
+            } else if (Array.isArray(parsed.items)) {
+              const id = newId();
+              imported = {
+                version: 2,
+                activeSpinnerId: id,
+                spinners: [
+                  {
+                    id,
+                    name: "Imported",
+                    items: parsed.items,
+                    history: Array.isArray(parsed.history)
+                      ? parsed.history
+                      : [],
+                  },
+                ],
+              };
+            } else {
+              throw new Error("Unrecognized state format");
+            }
+            if (
+              !confirm(
+                "Replace ALL spinners with imported state? This can't be undone.",
+              )
+            ) {
+              event.target.value = "";
+              return;
+            }
+            state = imported;
+            currentRotation = 0;
+            lastWinner = null;
+            document.getElementById("winner-overlay").style.display = "none";
+            save();
+            renderTabs();
+            updateUI();
+            renderHistory();
+          } catch (err) {
+            alert("Failed to import: " + err.message);
+          }
+          event.target.value = "";
+        };
+        reader.readAsText(file);
+      }
+
+      // --- Wheel drawing + spin ---
       function draw(rot = currentRotation) {
+        const items = activeSpinner().items;
         const active = items.filter((i) => i.isVisible && i.currentWeight > 0);
         const total = active.reduce((s, i) => s + i.currentWeight, 0);
         ctx.clearRect(0, 0, 1200, 1200);
@@ -555,7 +1258,7 @@
       }
 
       function showWinner() {
-        // Added item.isVisible check here
+        const items = activeSpinner().items;
         const active = items.filter((i) => i.isVisible && i.currentWeight > 0);
         const total = active.reduce((s, i) => s + i.currentWeight, 0);
 
@@ -579,34 +1282,21 @@
       }
 
       function confirmWin() {
-        const idx = items.findIndex((i) => i.id === lastWinner.id);
+        const sp = activeSpinner();
+        const idx = sp.items.findIndex((i) => i.id === lastWinner.id);
         if (idx !== -1) {
-          items[idx].currentWeight = Math.max(0, items[idx].currentWeight - 1);
-          save();
+          sp.items[idx].currentWeight = Math.max(
+            0,
+            sp.items[idx].currentWeight - 1,
+          );
         }
+        sp.history.unshift({
+          name: lastWinner.name,
+          timestamp: new Date().toISOString(),
+        });
+        save();
+        renderHistory();
         document.getElementById("winner-overlay").style.display = "none";
-        updateUI();
-      }
-
-      function toggleVisibility(i) {
-        items[i].isVisible = !items[i].isVisible;
-        save();
-        updateUI();
-      }
-
-      function adjustWeight(i, delta) {
-        items[i].currentWeight = Math.max(0, items[i].currentWeight + delta);
-        save();
-        updateUI();
-      }
-
-      function shuffleItems() {
-        // Fisher-Yates Shuffle
-        for (let i = items.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [items[i], items[j]] = [items[j], items[i]];
-        }
-        save();
         updateUI();
       }
     </script>
