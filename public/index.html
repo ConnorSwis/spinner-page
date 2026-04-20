@@ -217,6 +217,56 @@
         background: #ef4444;
       }
 
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tri-toggle {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #94a3b8;
+        background: transparent;
+        border-radius: 4px;
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .tri-toggle:hover {
+        border-color: #f8fafc;
+      }
+      .tri-toggle.full,
+      .tri-toggle.mixed {
+        background: #38bdf8;
+        border-color: #38bdf8;
+      }
+      .tri-toggle.full::after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 4px;
+        width: 4px;
+        height: 9px;
+        border: solid #0f172a;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .tri-toggle.mixed::after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 2px;
+        width: 10px;
+        height: 2px;
+        background: #0f172a;
+        border-radius: 1px;
+      }
+      .tri-toggle:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
       /* Tabs */
       .tabs-bar {
         display: flex;
@@ -405,6 +455,10 @@
       canvas {
         width: 100%;
         height: 100%;
+        clip-path: circle(50% at 50% 50%);
+        -webkit-clip-path: circle(50% at 50% 50%);
+      }
+      .wheel-container {
         filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
       }
       .pointer {
@@ -417,7 +471,6 @@
         background: #ef4444;
         clip-path: polygon(0 50%, 100% 0, 100% 100%);
         z-index: 20;
-        border-left: 4px solid white;
       }
 
       #spin-btn {
@@ -428,6 +481,7 @@
         color: white;
         border-radius: 50px;
         box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+        min-width: 320px;
       }
       #spin-btn:hover {
         transform: scale(1.05);
@@ -477,11 +531,44 @@
         margin-bottom: 30px;
         line-height: 1.2;
       }
+      .winner-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
       .confirm-btn {
         background: #38bdf8;
         color: #0f172a;
         padding: 15px 40px;
         font-size: 1.2rem;
+      }
+      .decline-btn {
+        background: transparent;
+        color: #94a3b8;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border: 1px solid transparent;
+      }
+      .decline-btn:hover {
+        color: #f8fafc;
+        border-color: #475569;
+      }
+      .history-delete {
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 2px 6px;
+        margin-left: 8px;
+        border-radius: 4px;
+        line-height: 1;
+      }
+      .history-delete:hover {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
       }
 
       @keyframes fadeIn {
@@ -585,7 +672,15 @@
 
         <div class="inventory-container">
           <div class="inventory-header">
-            <h3>Items</h3>
+            <div class="header-left">
+              <button
+                class="tri-toggle"
+                id="toggle-all"
+                onclick="toggleAll()"
+                title="Toggle all items"
+              ></button>
+              <h3>Items</h3>
+            </div>
             <button
               class="mini-btn"
               style="background: #3b82f6"
@@ -631,9 +726,14 @@
           <div class="winner-card">
             <h3>Selected Item</h3>
             <h2 id="winner-text">---</h2>
-            <button class="confirm-btn" onclick="confirmWin()">
-              Confirm & Deduct
-            </button>
+            <div class="winner-actions">
+              <button class="confirm-btn" onclick="confirmWin()">
+                Confirm
+              </button>
+              <button class="decline-btn" onclick="declineWin()">
+                Decline
+              </button>
+            </div>
           </div>
         </div>
 
@@ -653,6 +753,7 @@
       let state = null;
       let currentRotation = 0;
       let isSpinning = false;
+      let skipRequested = false;
       let lastWinner = null;
 
       const canvas = document.getElementById("wheel");
@@ -990,6 +1091,27 @@
           (i) => i.isVisible && i.currentWeight > 0,
         );
         document.getElementById("spin-btn").disabled = !canSpin;
+
+        const toggleEl = document.getElementById("toggle-all");
+        toggleEl.classList.remove("full", "mixed");
+        if (sp.items.length === 0) {
+          toggleEl.disabled = true;
+        } else {
+          toggleEl.disabled = false;
+          const visibleCount = sp.items.filter((i) => i.isVisible).length;
+          if (visibleCount === sp.items.length) toggleEl.classList.add("full");
+          else if (visibleCount > 0) toggleEl.classList.add("mixed");
+        }
+      }
+
+      function toggleAll() {
+        const sp = activeSpinner();
+        if (!sp.items.length) return;
+        const allVisible = sp.items.every((i) => i.isVisible);
+        const target = !allVisible;
+        sp.items.forEach((i) => (i.isVisible = target));
+        save();
+        updateUI();
       }
 
       function resetOne(i) {
@@ -1056,14 +1178,24 @@
         }
         list.innerHTML = history
           .map(
-            (entry) => `
+            (entry, i) => `
               <div class="history-item">
                 <div class="history-name" title="${escapeHTML(entry.name)}">${escapeHTML(entry.name)}</div>
                 <div class="history-time">${formatTimestamp(entry.timestamp)}</div>
+                <button class="history-delete"
+                        onclick="deleteHistoryEntry(${i})"
+                        title="Delete this entry">×</button>
               </div>
             `,
           )
           .join("");
+      }
+
+      function deleteHistoryEntry(i) {
+        const sp = activeSpinner();
+        sp.history.splice(i, 1);
+        save();
+        renderHistory();
       }
 
       function clearHistory() {
@@ -1179,6 +1311,10 @@
 
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        ctx.clip();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2);
         ctx.fillStyle = active[0].color;
         ctx.fill();
 
@@ -1228,9 +1364,14 @@
       }
 
       function spin() {
-        if (isSpinning) return;
+        const btn = document.getElementById("spin-btn");
+        if (isSpinning) {
+          skipRequested = true;
+          return;
+        }
         isSpinning = true;
-        document.getElementById("spin-btn").disabled = true;
+        skipRequested = false;
+        btn.textContent = "SKIP";
 
         const duration = 8000;
         const startRot = currentRotation;
@@ -1240,7 +1381,8 @@
 
         function animate(now) {
           const elapsed = now - startTime;
-          const t = Math.min(elapsed / duration, 1);
+          let t = Math.min(elapsed / duration, 1);
+          if (skipRequested) t = 1;
           const ease = 1 - Math.pow(1 - t, 5);
 
           currentRotation = startRot + (endRot - startRot) * ease;
@@ -1250,7 +1392,9 @@
             requestAnimationFrame(animate);
           } else {
             isSpinning = false;
+            skipRequested = false;
             currentRotation %= Math.PI * 2;
+            btn.textContent = "SPIN THE WHEEL";
             showWinner();
           }
         }
@@ -1298,6 +1442,11 @@
         renderHistory();
         document.getElementById("winner-overlay").style.display = "none";
         updateUI();
+      }
+
+      function declineWin() {
+        lastWinner = null;
+        document.getElementById("winner-overlay").style.display = "none";
       }
     </script>
   </body>
